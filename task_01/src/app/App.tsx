@@ -2,7 +2,8 @@ import { type FC, StrictMode } from 'react';
 import { LoggerContextProvider } from '@dodobrands/react-logger';
 
 import { RenderingUseState } from 'features/RenderingUseState/RenderingUseState';
-import { UseRefPractice } from 'features/UseRefPractice/UseRefPractice';
+import { UseRefPractice1 } from 'features/UseRefPractice1/UseRefPractice1';
+import { UseRefPractice2 } from 'features/UseRefPractice2/UseRefPractice2';
 import { logger } from 'shared/lib/logger/logger';
 import { ContainerStyled, TaskBlockStyled, TaskTitleStyled } from './App.styles';
 
@@ -11,12 +12,16 @@ export const App: FC = () => (
 		<LoggerContextProvider loggerInstanceRef={logger}>
 			<ContainerStyled>
 				<TaskBlockStyled>
-					<TaskTitleStyled>Task 1.1</TaskTitleStyled>
+					<TaskTitleStyled>Task 1.1 useState</TaskTitleStyled>
 					<RenderingUseState />
 				</TaskBlockStyled>
 				<TaskBlockStyled>
-					<TaskTitleStyled>Task 1.2</TaskTitleStyled>
-					<UseRefPractice />
+					<TaskTitleStyled>Task 1.2 useRef for state</TaskTitleStyled>
+					<UseRefPractice1 />
+				</TaskBlockStyled>
+				<TaskBlockStyled>
+					<TaskTitleStyled>Task 1.3 useRef for html</TaskTitleStyled>
+					<UseRefPractice2 />
 				</TaskBlockStyled>
 			</ContainerStyled>
 		</LoggerContextProvider>

@@ -1,14 +1,8 @@
 import { useRef, useState } from 'react';
 
-import {
-	ButtonSecondaryStyled,
-	ButtonStyled,
-	ButtonSuccessStyled,
-	ContainerStyled,
-	InfoDisplayStyled,
-} from './UseRefPractice.styles';
+import { ButtonStyled, ContainerStyled, InfoDisplayStyled } from './UseRefPractice1.styles';
 
-export const UseRefPractice = (): JSX.Element => {
+export const UseRefPractice1 = (): JSX.Element => {
 	console.log('Render component');
 
 	const refCount = useRef(0);
@@ -36,8 +30,8 @@ export const UseRefPractice = (): JSX.Element => {
 		<ContainerStyled>
 			<ButtonStyled type='button' value='click me to increase ref' onClick={handleClick} />
 			<InfoDisplayStyled>Count: {count}</InfoDisplayStyled>
-			<ButtonSecondaryStyled type='button' value='increase count' onClick={() => setCount(prev => prev + 1)} />
-			<ButtonSuccessStyled type='button' value='show alert' onClick={showAlert} />
+			<ButtonStyled type='button' value='increase count' onClick={() => setCount(prev => prev + 1)} />
+			<ButtonStyled type='button' value='show alert' onClick={showAlert} />
 		</ContainerStyled>
 	);
 };
