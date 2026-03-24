@@ -9,8 +9,14 @@ export const UseRefPractice2 = (): JSX.Element => {
 	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
 	const setFocus = (index: number): void => {
-		if (inputRefs.current[index]) {
-			inputRefs.current[index]?.focus();
+		inputRefs.current[index]?.focus();
+	};
+
+	const clear = (): void => {
+		for (let i = 0; i < inputRefs.current.length; i++) {
+			if (inputRefs.current[i]) {
+				inputRefs.current[i]!.value = '';
+			}
 		}
 	};
 
@@ -33,6 +39,7 @@ export const UseRefPractice2 = (): JSX.Element => {
 					/>
 				</ButtonInputContainerStyled>
 			))}
+			<ButtonStyled type='button' value='Очистить' onClick={clear} />
 		</ContainerStyled>
 	);
 };
