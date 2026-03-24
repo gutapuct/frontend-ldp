@@ -14,13 +14,22 @@ export const UseRefPractice = (): JSX.Element => {
 	const refCount = useRef(0);
 	const [count, setCount] = useState(0);
 
+	const refTimer = useRef(0);
+	if (refTimer.current === 0) {
+		setInterval(() => {
+			refTimer.current++;
+		}, 1000);
+	}
+
 	const handleClick = (): void => {
 		refCount.current++;
 	};
 
 	const showAlert = (): void => {
 		// eslint-disable-next-line no-alert
-		alert(`Count: ${count}, Ref count: ${refCount.current}, Sum: ${count + refCount.current}`);
+		alert(
+			`Count: ${count}, Ref count: ${refCount.current}, Sum: ${count + refCount.current}, Timer: ${refTimer.current} seconds`,
+		);
 	};
 
 	return (
