@@ -26,7 +26,7 @@ export const RenderingUseState = (): JSX.Element => {
 		// setCount(count + 1); // bad way
 		// setCount(count + 1); // bad way
 		// setTimeout(() => {
-		// 	setCount(count + 1); // bad way
+		// 	   setCount(count + 1); // bad way
 		// }, 1000);
 
 		setCount(prev => prev + 1);
