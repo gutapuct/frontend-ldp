@@ -1,22 +1,24 @@
 import { useState } from 'react';
 
+import { ButtonStyled, ContainerStyled, CountDisplayStyled } from './RenderingUseState.styles';
+
+const getInitialCount = (): number => {
+	let a = 0;
+	let b = 0;
+	let accum = 0;
+	for (let i = 0; i < 100_000_000; i++) {
+		a = i;
+		b = 100_000_000 - i;
+		accum = accum + a + b;
+	}
+
+	console.log('rerender, accum: ', accum);
+
+	return 0;
+};
+
 export const RenderingUseState = (): JSX.Element => {
-	const getInitialCount = (): number => {
-		let a = 0;
-		let b = 0;
-		let accum = 0;
-		for (let i = 0; i < 100_000_000; i++) {
-			a = i;
-			b = 100_000_000 - i;
-			accum = accum + a + b;
-		}
-
-		console.log('rerender, accum: ', accum);
-
-		return 0;
-	};
-
-	// bad way... or useMemo - это тоже не будет вызывать повтора вычисления
+	// bad way... or useMemo - это тоже не будет вызывать повтора вычисления, если функция будет внутри компоненты
 	// const [count, setCount] = useState(getInitialCount());
 	const [count, setCount] = useState(() => getInitialCount());
 
@@ -37,9 +39,9 @@ export const RenderingUseState = (): JSX.Element => {
 	};
 
 	return (
-		<>
-			<div>{count}</div>
-			<input type='button' onClick={handleClick} value='increase' />
-		</>
+		<ContainerStyled>
+			<CountDisplayStyled>{count}</CountDisplayStyled>
+			<ButtonStyled type='button' onClick={handleClick} value='increase' />
+		</ContainerStyled>
 	);
 };

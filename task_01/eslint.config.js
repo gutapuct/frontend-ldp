@@ -9,6 +9,7 @@ export default [
 		rules: {
 			'@typescript-eslint/no-magic-numbers': 'off',
 			'no-console': 'off',
+			'i18next/no-literal-string': 'off',
 		},
 	},
 ];
