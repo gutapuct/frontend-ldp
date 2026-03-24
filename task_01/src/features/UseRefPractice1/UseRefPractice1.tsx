@@ -1,12 +1,12 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { ButtonStyled, ContainerStyled, InfoDisplayStyled } from './UseRefPractice1.styles';
+import { Counter } from 'shared/ui/Counter/Counter';
+import { ButtonStyled, ContainerStyled } from './UseRefPractice1.styles';
 
 export const UseRefPractice1 = (): JSX.Element => {
 	console.log('Render component');
 
 	const refCount = useRef(0);
-	const [count, setCount] = useState(0);
 
 	const refTimer = useRef(0);
 	if (refTimer.current === 0) {
@@ -21,16 +21,13 @@ export const UseRefPractice1 = (): JSX.Element => {
 
 	const showAlert = (): void => {
 		// eslint-disable-next-line no-alert
-		alert(
-			`Count: ${count}, Ref count: ${refCount.current}, Sum: ${count + refCount.current}, Timer: ${refTimer.current} seconds`,
-		);
+		alert(`Ref count: ${refCount.current}, Timer: ${refTimer.current} seconds`);
 	};
 
 	return (
 		<ContainerStyled>
+			<Counter />
 			<ButtonStyled type='button' value='click me to increase ref' onClick={handleClick} />
-			<InfoDisplayStyled>Count: {count}</InfoDisplayStyled>
-			<ButtonStyled type='button' value='increase count' onClick={() => setCount(prev => prev + 1)} />
 			<ButtonStyled type='button' value='show alert' onClick={showAlert} />
 		</ContainerStyled>
 	);

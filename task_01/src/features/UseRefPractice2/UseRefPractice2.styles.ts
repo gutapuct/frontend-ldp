@@ -6,8 +6,6 @@ export const ContainerStyled = styled.div`
 	flex-direction: column;
 `;
 
-export const InfoDisplayStyled = styled.div``;
-
 export const ButtonStyled = styled.input`
 	align-self: flex-start;
 `;

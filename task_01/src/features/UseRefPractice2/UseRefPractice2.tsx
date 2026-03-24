@@ -1,19 +1,12 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import {
-	ButtonInputContainerStyled,
-	ButtonStyled,
-	ContainerStyled,
-	InfoDisplayStyled,
-	InputStyled,
-} from './UseRefPractice2.styles';
+import { Counter } from 'shared/ui/Counter/Counter';
+import { ButtonInputContainerStyled, ButtonStyled, ContainerStyled, InputStyled } from './UseRefPractice2.styles';
 
 export const UseRefPractice2 = (): JSX.Element => {
 	console.log('Render component');
 
 	const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-	const [count, setCount] = useState(0);
 
 	const setFocus = (index: number): void => {
 		if (inputRefs.current[index]) {
@@ -23,8 +16,7 @@ export const UseRefPractice2 = (): JSX.Element => {
 
 	return (
 		<ContainerStyled>
-			<InfoDisplayStyled>Count: {count}</InfoDisplayStyled>
-			<ButtonStyled type='button' value='increase count' onClick={() => setCount(prev => prev + 1)} />
+			<Counter />
 			{Array.from({ length: 10 }).map((_, index) => (
 				// eslint-disable-next-line react/no-array-index-key
 				<ButtonInputContainerStyled key={index}>
