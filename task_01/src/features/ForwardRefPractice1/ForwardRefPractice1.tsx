@@ -11,6 +11,7 @@ export const ForwardRefPractice1 = (): JSX.Element => {
 
 	const pause = (): void => {
 		ref.current?.pause();
+		console.log(`Высота видео: ${ref.current?.videoHeight}`);
 	};
 
 	return (
