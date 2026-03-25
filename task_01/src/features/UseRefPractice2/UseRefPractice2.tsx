@@ -23,7 +23,7 @@ export const UseRefPractice2 = (): JSX.Element => {
 	return (
 		<ContainerStyled>
 			<Counter />
-			{Array.from({ length: 10 }).map((_, index) => (
+			{Array.from({ length: 5 }).map((_, index) => (
 				// eslint-disable-next-line react/no-array-index-key
 				<ButtonInputContainerStyled key={index}>
 					<ButtonStyled

@@ -1,6 +1,7 @@
 import { type FC, StrictMode } from 'react';
 import { LoggerContextProvider } from '@dodobrands/react-logger';
 
+import { ForwardRefPractice1 } from 'features/ForwardRefPractice1/ForwardRefPractice1';
 import { RenderingUseState } from 'features/RenderingUseState/RenderingUseState';
 import { UseRefPractice1 } from 'features/UseRefPractice1/UseRefPractice1';
 import { UseRefPractice2 } from 'features/UseRefPractice2/UseRefPractice2';
@@ -22,6 +23,10 @@ export const App: FC = () => (
 				<TaskBlockStyled>
 					<TaskTitleStyled>Task 1.3 useRef for html</TaskTitleStyled>
 					<UseRefPractice2 />
+				</TaskBlockStyled>
+				<TaskBlockStyled>
+					<TaskTitleStyled>Task 1.4 forwardRef</TaskTitleStyled>
+					<ForwardRefPractice1 />
 				</TaskBlockStyled>
 			</ContainerStyled>
 		</LoggerContextProvider>
