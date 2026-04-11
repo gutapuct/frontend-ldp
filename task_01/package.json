@@ -37,5 +37,8 @@
 	"engines": {
 		"node": "24"
 	},
-	"packageManager": "yarn@4.13.0"
+	"packageManager": "yarn@4.13.0",
+	"dependencies": {
+		"react-compiler-runtime": "1.0.0"
+	}
 }

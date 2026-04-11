@@ -3,6 +3,8 @@ import { LoggerContextProvider } from '@dodobrands/react-logger';
 
 import { ForwardRefPractice1 } from 'features/ForwardRefPractice1/ForwardRefPractice1';
 import { ForwardRefPractice2 } from 'features/ForwardRefPractice2/ForwardRefPractice2';
+import { ReactCompiler } from 'features/ReactCompiler/ReactCompiler';
+import { ReactCompiler2 } from 'features/ReactCompiler2/ReactCompiler2';
 import { RenderingUseState } from 'features/RenderingUseState/RenderingUseState';
 import { UseRefPractice1 } from 'features/UseRefPractice1/UseRefPractice1';
 import { UseRefPractice2 } from 'features/UseRefPractice2/UseRefPractice2';
@@ -32,6 +34,14 @@ export const App: FC = () => (
 				<TaskBlockStyled>
 					<TaskTitleStyled>Task 1.5 useImperativeHandle</TaskTitleStyled>
 					<ForwardRefPractice2 />
+				</TaskBlockStyled>
+				<TaskBlockStyled>
+					<TaskTitleStyled>Task 1.6 react compiler</TaskTitleStyled>
+					<ReactCompiler />
+				</TaskBlockStyled>
+				<TaskBlockStyled>
+					<TaskTitleStyled>Task 1.7 react compiler#2</TaskTitleStyled>
+					<ReactCompiler2 />
 				</TaskBlockStyled>
 			</ContainerStyled>
 		</LoggerContextProvider>
