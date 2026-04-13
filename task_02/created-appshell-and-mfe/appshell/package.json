@@ -1,0 +1,20 @@
+{
+	"name": "appshell",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "dodo-appshell-scripts build"
+	},
+	"devDependencies": {
+		"@dodopizza/appshell-scripts": "2.15.8",
+		"@dodopizza/eslint-plugin": "4.2.3",
+		"@dodopizza/ts-config": "1.1.0",
+		"eslint": "9.24.0",
+		"single-spa": "6.0.3",
+		"typescript": "5.8.3",
+		"workbox-cacheable-response": "^7.0.0",
+		"workbox-routing": "^7.0.0",
+		"workbox-strategies": "^7.0.0"
+	},
+	"packageManager": "yarn@4.13.0"
+}
