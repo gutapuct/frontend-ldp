@@ -29,7 +29,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dodo KDS v1");
-    c.RoutePrefix = string.Empty; // Swagger opens at root /
+    c.RoutePrefix = "swagger";
 });
 
 app.UseCors();

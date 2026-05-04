@@ -19,10 +19,10 @@ interface CreateOrderParams {
 
 export const ordersApi = baseApi.injectEndpoints({
 	endpoints: build => ({
-		getOrders: build.query<Order[], GetOrdersParams | void>({
+		getOrders: build.query<Order[], GetOrdersParams | undefined>({
 			query: params => ({
 				url: '/api/orders',
-				params: params ?? {},
+				params,
 			}),
 			providesTags: result =>
 				result

@@ -1,11 +1,13 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector, type EntityState } from '@reduxjs/toolkit';
 
-import { type RootState } from 'app/store';
 import { ordersAdapter } from 'entities/order/model/ordersSlice';
+import { type Order } from 'entities/order/model/types';
+import { MILLISECONDS_PER_MINUTE } from 'entities/order/ui/OrderCard/OrderCard';
 import { OrderStatus, type StationType } from 'shared/types/domain';
 
-const ordersSelectors = ordersAdapter.getSelectors((state: RootState) => state.orders);
-const MINUTE = 60_000;
+type OrdersStateShape = { orders: EntityState<Order, string> };
+
+const ordersSelectors = ordersAdapter.getSelectors((state: OrdersStateShape) => state.orders);
 
 export const { selectAll: selectAllOrders, selectById: selectOrderById } = ordersSelectors;
 
@@ -14,7 +16,7 @@ export const { selectAll: selectAllOrders, selectById: selectOrderById } = order
  * Принимает station параметром — entity не зависит от uiSlice.
  */
 export const selectOrdersByStation = createSelector(
-	[ordersSelectors.selectAll, (_state: RootState, station: StationType | 'all') => station],
+	[ordersSelectors.selectAll, (_state: OrdersStateShape, station: StationType | 'all') => station],
 	(orders, station) => (station === 'all' ? orders : orders.filter(o => o.station === station)),
 );
 
@@ -45,7 +47,7 @@ export const selectAverageCookTimeToday = createSelector(ordersSelectors.selectA
 		const start = new Date(o.createdAt).getTime();
 		const end = new Date(o.updatedAt!).getTime();
 
-		return sum + (end - start) / MINUTE;
+		return sum + (end - start) / MILLISECONDS_PER_MINUTE;
 	}, 0);
 
 	return Math.round(totalMinutes / readyToday.length);
