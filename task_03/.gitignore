@@ -1,0 +1,14 @@
+node_modules
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+dist
+.swc
+.vitest-preview
+yarn-error.log
+coverage
+.DS_Store
+.pnp.*
