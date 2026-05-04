@@ -1,0 +1,6 @@
+@DodoKds.Api_HostAddress = http://localhost:5102
+
+GET {{DodoKds.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
