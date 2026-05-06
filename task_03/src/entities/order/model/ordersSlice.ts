@@ -14,7 +14,18 @@ const ordersSlice = createSlice({
 	reducers: {},
 	extraReducers: builder => {
 		builder.addMatcher(ordersApi.endpoints.getOrders.matchFulfilled, (state, { payload }) => {
-			ordersAdapter.setAll(state, payload);
+			for (const incoming of payload) {
+				const existing: Order | undefined = state.entities[incoming.id];
+
+				if (
+					// eslint-disable-next-line
+					existing === undefined ||
+					existing.status !== incoming.status ||
+					existing.updatedAt !== incoming.updatedAt
+				) {
+					ordersAdapter.upsertOne(state, incoming);
+				}
+			}
 		});
 	},
 });

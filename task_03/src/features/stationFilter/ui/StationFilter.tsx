@@ -24,6 +24,9 @@ export const StationFilter: FC = () => {
 	const selectedStation = useAppSelector(state => state.stationFilter.selectedStation);
 	const showReadyOrders = useAppSelector(state => state.stationFilter.showReadyOrders);
 
+	// eslint-disable-next-line no-console
+	console.log(`[StationFilter] render — station=${String(selectedStation)} showReady=${String(showReadyOrders)}`);
+
 	return (
 		<WrapperStyled>
 			<ButtonGroupStyled>

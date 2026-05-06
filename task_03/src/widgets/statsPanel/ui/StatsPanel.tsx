@@ -17,6 +17,11 @@ export const StatsPanel: FC = () => {
 	const counts = useAppSelector(selectOrderCountsByStatus);
 	const avgCookTime = useAppSelector(selectAverageCookTimeToday);
 
+	// eslint-disable-next-line no-console
+	console.log(
+		`[StatsPanel] render — new=${counts.new} inProgress=${counts.inProgress} ready=${counts.ready} avg=${avgCookTime}`,
+	);
+
 	return (
 		<PanelStyled>
 			<StatStyled>

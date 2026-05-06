@@ -31,6 +31,9 @@ const ERROR_TEXT = '⚠️ Не удалось загрузить заказы. 
 const EMPTY_TEXT = 'Нет заказов';
 
 export const KanbanBoard: FC = () => {
+	// eslint-disable-next-line no-console
+	console.log('[KanbanBoard] render');
+
 	const { isLoading, isError } = useGetOrdersQuery(undefined, {
 		pollingInterval: POLLING_INTERVAL_MS,
 		skipPollingIfUnfocused: true,

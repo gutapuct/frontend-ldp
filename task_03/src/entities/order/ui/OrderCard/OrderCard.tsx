@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, memo, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { useUpdateOrderStatusMutation } from 'entities/order/api';
@@ -63,7 +63,10 @@ const getUrgency = (minutes: number): UrgencyLevel => {
 const formatWaitTime = (minutes: number): string => `⏱ ${minutes} мин`;
 const formatQuantity = (quantity: number): string => `×${quantity}`;
 
-export const OrderCard: FC<Props> = ({ order }) => {
+export const OrderCard: FC<Props> = memo(({ order }) => {
+	// eslint-disable-next-line no-console
+	console.log(`[OrderCard] render — order=${order.orderNumber} status=${order.status}`);
+
 	const [updateStatus, { isLoading }] = useUpdateOrderStatusMutation();
 	const [waitMinutes, setWaitMinutes] = useState(getWaitMinutes(order.createdAt));
 
@@ -116,4 +119,4 @@ export const OrderCard: FC<Props> = ({ order }) => {
 			</CardFooterStyled>
 		</CardStyled>
 	);
-};
+});
