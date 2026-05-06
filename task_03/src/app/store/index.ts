@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { ordersApi } from 'entities/order/api';
 import { ordersReducer } from 'entities/order/model/ordersSlice';
+import { stationsApi } from 'entities/station/api';
 import { stationFilterReducer } from 'features/stationFilter/model/slice';
-import { baseApi } from 'shared/api/baseApi';
 
 export const store = configureStore({
 	reducer: {
-		[baseApi.reducerPath]: baseApi.reducer,
+		[ordersApi.reducerPath]: ordersApi.reducer,
+		[stationsApi.reducerPath]: stationsApi.reducer,
 		orders: ordersReducer,
 		stationFilter: stationFilterReducer,
 	},
-	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(ordersApi.middleware, stationsApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,5 +1,6 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import { type Order } from 'entities/order/model/types';
-import { baseApi } from 'shared/api/baseApi';
 import { type OrderStatus, type StationType } from 'shared/types/domain';
 
 interface GetOrdersParams {
@@ -17,13 +18,13 @@ interface CreateOrderParams {
 	items: Array<{ name: string; quantity: number }>;
 }
 
-export const ordersApi = baseApi.injectEndpoints({
+export const ordersApi = createApi({
+	reducerPath: 'ordersApi',
+	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5102' }),
+	tagTypes: ['Order'],
 	endpoints: build => ({
 		getOrders: build.query<Order[], GetOrdersParams | undefined>({
-			query: params => ({
-				url: '/api/orders',
-				params,
-			}),
+			query: params => ({ url: '/api/orders', params }),
 			providesTags: result =>
 				result
 					? [...result.map(({ id }) => ({ type: 'Order' as const, id })), { type: 'Order', id: 'LIST' }]
@@ -48,19 +49,12 @@ export const ordersApi = baseApi.injectEndpoints({
 		}),
 
 		createOrder: build.mutation<Order, CreateOrderParams>({
-			query: body => ({
-				url: '/api/orders',
-				method: 'POST',
-				body,
-			}),
+			query: body => ({ url: '/api/orders', method: 'POST', body }),
 			invalidatesTags: [{ type: 'Order', id: 'LIST' }],
 		}),
 
 		deleteOrder: build.mutation<void, string>({
-			query: id => ({
-				url: `/api/orders/${id}`,
-				method: 'DELETE',
-			}),
+			query: id => ({ url: `/api/orders/${id}`, method: 'DELETE' }),
 			invalidatesTags: (_result, _err, id) => [
 				{ type: 'Order', id },
 				{ type: 'Order', id: 'LIST' },
