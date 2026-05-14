@@ -1,7 +1,7 @@
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 
-import { useGetOrdersQuery } from 'entities/order/api';
-import { selectOrdersByStation } from 'entities/order/model/selectors';
+import { useOrders } from 'entities/order/api/hooks';
+import { selectOrdersByStation, selectSortedOrders } from 'entities/order/model/selectors';
 import { type Order } from 'entities/order/model/types';
 import { OrderCard } from 'entities/order/ui/OrderCard';
 import { useAppSelector } from 'shared/store/hooks';
@@ -18,8 +18,6 @@ import {
 	MessageStyled,
 } from './KanbanBoard.styles';
 
-const POLLING_INTERVAL_MS = 10_000;
-
 const COLUMNS: Array<{ status: OrderStatus; label: string }> = [
 	{ status: OrderStatus.New, label: '🆕 Новые' },
 	{ status: OrderStatus.InProgress, label: '👨‍🍳 В работе' },
@@ -34,15 +32,15 @@ export const KanbanBoard: FC = () => {
 	// eslint-disable-next-line no-console
 	console.log('[KanbanBoard] render');
 
-	const { isLoading, isError } = useGetOrdersQuery(undefined, {
-		pollingInterval: POLLING_INTERVAL_MS,
-		skipPollingIfUnfocused: true,
-	});
+	const { data: allOrders = [], isLoading, isError } = useOrders();
 
 	const selectedStation = useAppSelector(state => state.stationFilter.selectedStation);
 	const showReadyOrders = useAppSelector(state => state.stationFilter.showReadyOrders);
 
-	const orders = useAppSelector(state => selectOrdersByStation(state, selectedStation));
+	const orders = useMemo(
+		() => selectOrdersByStation(selectSortedOrders(allOrders), selectedStation),
+		[allOrders, selectedStation],
+	);
 
 	if (isLoading) {
 		return <MessageStyled>{LOADING_TEXT}</MessageStyled>;

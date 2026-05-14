@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
+import { useOrders } from 'entities/order/api/hooks';
 import { selectAverageCookTimeToday, selectOrderCountsByStatus } from 'entities/order/model/selectors';
-import { useAppSelector } from 'shared/store/hooks';
 import { DividerStyled, PanelStyled, StatLabelStyled, StatStyled, StatValueStyled } from './StatsPanel.styles';
 
 const STAT_LABELS = {
@@ -14,8 +14,10 @@ const STAT_LABELS = {
 const formatCookTime = (minutes: number): string => (minutes > 0 ? `${minutes} мин` : '—');
 
 export const StatsPanel: FC = () => {
-	const counts = useAppSelector(selectOrderCountsByStatus);
-	const avgCookTime = useAppSelector(selectAverageCookTimeToday);
+	const { data: orders = [] } = useOrders();
+
+	const counts = selectOrderCountsByStatus(orders);
+	const avgCookTime = selectAverageCookTimeToday(orders);
 
 	// eslint-disable-next-line no-console
 	console.log(

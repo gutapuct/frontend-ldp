@@ -13,11 +13,6 @@ interface UpdateOrderStatusParams {
 	status: OrderStatus;
 }
 
-interface CreateOrderParams {
-	station: StationType;
-	items: Array<{ name: string; quantity: number }>;
-}
-
 export const ordersApi = createApi({
 	reducerPath: 'ordersApi',
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5102' }),
@@ -31,11 +26,6 @@ export const ordersApi = createApi({
 					: [{ type: 'Order', id: 'LIST' }],
 		}),
 
-		getOrderById: build.query<Order, string>({
-			query: id => `/api/orders/${id}`,
-			providesTags: (_result, _err, id) => [{ type: 'Order', id }],
-		}),
-
 		updateOrderStatus: build.mutation<Order, UpdateOrderStatusParams>({
 			query: ({ id, status }) => ({
 				url: `/api/orders/${id}/status`,
@@ -47,26 +37,7 @@ export const ordersApi = createApi({
 				{ type: 'Order', id: 'LIST' },
 			],
 		}),
-
-		createOrder: build.mutation<Order, CreateOrderParams>({
-			query: body => ({ url: '/api/orders', method: 'POST', body }),
-			invalidatesTags: [{ type: 'Order', id: 'LIST' }],
-		}),
-
-		deleteOrder: build.mutation<void, string>({
-			query: id => ({ url: `/api/orders/${id}`, method: 'DELETE' }),
-			invalidatesTags: (_result, _err, id) => [
-				{ type: 'Order', id },
-				{ type: 'Order', id: 'LIST' },
-			],
-		}),
 	}),
 });
 
-export const {
-	useGetOrdersQuery,
-	useGetOrderByIdQuery,
-	useUpdateOrderStatusMutation,
-	useCreateOrderMutation,
-	useDeleteOrderMutation,
-} = ordersApi;
+export const { useGetOrdersQuery, useUpdateOrderStatusMutation } = ordersApi;
