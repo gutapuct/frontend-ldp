@@ -1,8 +1,9 @@
-import { type FC, memo, useEffect, useState } from 'react';
+import { type FC, useMemo } from 'react';
 import toast from 'react-hot-toast';
 
 import { useUpdateOrderStatusMutation } from 'entities/order/api';
 import { type Order } from 'entities/order/model/types';
+import { useNow } from 'shared/lib/time/TimeContext';
 import { OrderStatus, StationType } from 'shared/types/domain';
 import {
 	ActionButtonStyled,
@@ -24,7 +25,6 @@ interface Props {
 type UrgencyLevel = 'low' | 'medium' | 'high';
 
 export const MILLISECONDS_PER_MINUTE = 60_000;
-const TIMER_REFRESH_INTERVAL_MS = 30_000;
 const WARN_THRESHOLD_MINUTES = 5;
 const ALERT_THRESHOLD_MINUTES = 10;
 
@@ -46,9 +46,6 @@ const STATUS_NEXT_LABEL: Partial<Record<OrderStatus, string>> = {
 
 const TOAST_ERROR_PREFIX = 'Не удалось обновить статус заказа';
 
-const getWaitMinutes = (createdAt: string): number =>
-	(Date.now() - new Date(createdAt).getTime()) / MILLISECONDS_PER_MINUTE;
-
 const getUrgency = (minutes: number): UrgencyLevel => {
 	if (minutes < WARN_THRESHOLD_MINUTES) {
 		return 'low';
@@ -63,18 +60,14 @@ const getUrgency = (minutes: number): UrgencyLevel => {
 const formatWaitTime = (minutes: number): string => `⏱ ${minutes} мин`;
 const formatQuantity = (quantity: number): string => `×${quantity}`;
 
-export const OrderCard: FC<Props> = memo(({ order }) => {
+export const OrderCard: FC<Props> = ({ order }) => {
 	// eslint-disable-next-line no-console
 	console.log(`[OrderCard] render — order=${order.orderNumber} status=${order.status}`);
 
 	const [updateStatus, { isLoading }] = useUpdateOrderStatusMutation();
-	const [waitMinutes, setWaitMinutes] = useState(getWaitMinutes(order.createdAt));
-
-	useEffect(() => {
-		const id = setInterval(() => setWaitMinutes(getWaitMinutes(order.createdAt)), TIMER_REFRESH_INTERVAL_MS);
-
-		return () => clearInterval(id);
-	}, [order.createdAt]);
+	const now = useNow();
+	const createdAtMs = useMemo(() => new Date(order.createdAt).getTime(), [order.createdAt]);
+	const waitMinutes = (now.getTime() - createdAtMs) / MILLISECONDS_PER_MINUTE;
 
 	const nextStatus = STATUS_NEXT[order.status];
 	const nextLabel = STATUS_NEXT_LABEL[order.status];
@@ -119,4 +112,4 @@ export const OrderCard: FC<Props> = memo(({ order }) => {
 			</CardFooterStyled>
 		</CardStyled>
 	);
-});
+};

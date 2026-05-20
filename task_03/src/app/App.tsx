@@ -5,6 +5,7 @@ import { LoggerContextProvider } from '@dodobrands/react-logger';
 import { StoreProvider } from 'app/providers/StoreProvider';
 import { StationFilter } from 'features/stationFilter/ui/StationFilter';
 import { logger } from 'shared/lib/logger/logger';
+import { TimeProvider } from 'shared/lib/time/TimeContext';
 import { KanbanBoard } from 'widgets/kanbanBoard/ui/KanbanBoard';
 import { StatsPanel } from 'widgets/statsPanel/ui/StatsPanel';
 import { GlobalStyled, HeaderStyled, LayoutStyled, LogoStyled, MainStyled, ToolbarStyled } from './App.styles';
@@ -26,7 +27,9 @@ export const App: FC = () => (
 						<StationFilter />
 					</ToolbarStyled>
 					<MainStyled>
-						<KanbanBoard />
+						<TimeProvider>
+							<KanbanBoard />
+						</TimeProvider>
 					</MainStyled>
 				</LayoutStyled>
 			</StoreProvider>
