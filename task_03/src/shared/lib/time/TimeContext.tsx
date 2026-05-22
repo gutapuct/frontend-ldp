@@ -2,7 +2,7 @@ import { createContext, type FC, type ReactNode, useContext, useEffect, useState
 
 const TIMER_INTERVAL_MS = 30_000;
 
-const TimeContext = createContext<Date>(new Date());
+const TimeContext = createContext<Date | undefined>(undefined);
 
 interface Props {
 	children: ReactNode;
@@ -20,4 +20,11 @@ export const TimeProvider: FC<Props> = ({ children }) => {
 	return <TimeContext.Provider value={now}>{children}</TimeContext.Provider>;
 };
 
-export const useNow = (): Date => useContext(TimeContext);
+export const useNow = (): Date => {
+	const context = useContext(TimeContext);
+	if (context === undefined) {
+		throw new Error('useNow must be used within a TimeProvider');
+	}
+
+	return context;
+};
